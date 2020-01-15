@@ -1,0 +1,25 @@
+<%- include("../partials/header") %>
+
+<div class="row mt-4">
+	<div class="col-md-4">
+		<div class="card">
+			<img class="card-img-top" src="<%= user.avatar %>" alt="User profile image">
+			<div class="card-body">
+				<h5 class="card-title"><%= user.firstName + " " + user.lastName %></h5>
+				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				<a href="mailto:<%= user.email %>"><%= user.email %></a>
+		  </div>
+		</div>
+		<a href="/follow/<%= user.id %>"><button class="btn btn-primary mt-4">Follow <%= user.username %></button></a>
+	</div>
+	<div class="col-md-8 col-lg-4">
+		<h3><%= user.username %>'s campgrounds:</h3>
+		<div class="list-group">
+			<% campgrounds.forEach(function(campground){ %>
+			<a class="list-group-item list-group-item-action" href="/campgrounds/<%= campground.id %>"><%= campground.name %></a>
+			<% }); %>
+		</div>
+	</div>
+</div>
+
+<%- include("../partials/footer") %>
