@@ -7,10 +7,12 @@ body {
   position: relative;
   text-align: center;
   padding-top: 40vh;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
 #landing-header h1 {
   color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .slideshow { 
@@ -76,7 +78,7 @@ body {
   }
 }
 
-/* Older browser support - .no-cssanimations class added by modernizr */
+/* Older browser support */
 .no-cssanimations .slideshow li {
 	opacity: 1;
 }

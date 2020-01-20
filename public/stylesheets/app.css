@@ -1,3 +1,13 @@
+html {
+	height: 100%;
+}
+
+body {
+	position: relative;
+	padding-bottom: 4rem;
+	min-height: 100%;
+}
+
 .checked {
     color: orange;
 }
@@ -17,6 +27,15 @@ li.nav-item.text-center a {
 
 .delete-form {
 	display: inline;
+}
+
+.bottom {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 1rem;
+	background-color: #efefef;
 }
 
 /* Seach bar */

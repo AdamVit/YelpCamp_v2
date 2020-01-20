@@ -1,66 +1,83 @@
 <%- include("../partials/header") %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 style="text-align: center">Review Page: <%= campground.name %></h1>
-            <a href="/campgrounds/<%= campground._id %>">Go back to the campground page</a>
-            <div class="thumbnail">
-                <div class="caption-full">
-                    <% if (campground.rating === 0) { %>
-                    <h5>
-                        <em>No reviews yet.</em>
-                    </h5>
-                    <% } else { %>
-                    <p>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star <% if (campground.rating > 1.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (campground.rating > 2.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (campground.rating > 3.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (campground.rating > 4.5) { %> checked <% } %>"></span>
-                        <em>(total reviews: <%= campground.reviews.length %>)</em>
-                    </p>
-                    <p>
-                        Current campground rating: <strong><%= campground.rating.toFixed(2) %></strong>
-                    </p>
-                    <p><h4>All reviews for this campground:</h4></p>
-                    <hr style="margin-top: 0;">
-                    <% campground.reviews.forEach(function(review){ %>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %>
-							<%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
-                            <div>Review by: <strong><%= review.author.username %></strong></div>
-                            <span><em><%= review.updatedAt.toDateString() %></em></span>
-                        </div>
-                        <div class="col-md-9">
-                            <p style="text-align: justify; word-wrap: break-word;">
-                                <%= review.text %>
-                            </p>
-                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
-                            <a class="btn btn-xs btn-warning"
-                               href="/campgrounds/<%=campground._id %>/reviews/<%=review._id %>/edit">Edit</a>
-                            <form id="delete-form" action="/campgrounds/<%=campground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
-                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                            </form>
-                            <% } %>
-                        </div>
-                    </div>
-                    <hr>
-                    <% }); %>
-                    <% } %>
-                    <div>
-                        <a class="btn btn-primary <% if (currentUser && campground.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/campgrounds/<%= campground._id %>/reviews/new">
-                            Write a New Review</a>
-                    </div>
-                    <div style="margin-top: 10px;">
-                        <a class="btn btn-default" href="/campgrounds/<%= campground._id %>"><i class="fa fa-arrow-left"></i> Go back</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Review section-->
+<div class="row">
+	<div class="col-md-12">
+		<div class="text-center mb-4">
+			<h1 class="m-2">Review Page: <%= campground.name %></h1>
+			<% if (campground.rating === 0) { %>
+			<h5>
+				<em>No reviews yet.</em>
+			</h5>
+			<% } else { %>
+			<p>
+				<span class="far fa-star checked
+					<% if (campground.rating > 0.25 && campground.rating <= 0.75) { %> fas fa-star-half-alt checked <% } %> 
+					<% if(campground.rating > 0.75) { %> fas fa-star checked <% } %>">
+				</span>
+				<span class="far fa-star checked
+					<% if (campground.rating > 1.25 && campground.rating <= 1.75) { %> fas fa-star-half-alt checked <% } %>
+					<% if(campground.rating > 1.75) { %> fas fa-star checked <% } %>">
+				</span>
+				<span class="far fa-star checked
+					<% if (campground.rating > 2.25 && campground.rating <= 2.75) { %> fas fa-star-half-alt checked <% } %>
+					<% if(campground.rating > 2.75) { %> fas fa-star checked <% } %>">
+				</span>
+				<span class="far fa-star checked
+					<% if (campground.rating > 3.25 && campground.rating <= 3.75) { %> fas fa-star-half-alt checked <% } %> 
+					<% if(campground.rating > 3.75) { %> fas fa-star checked <% } %>">
+				</span>
+				<span class="far fa-star checked
+					<% if (campground.rating > 4.25 && campground.rating <= 4.75) { %> fas fa-star-half-alt checked <% } %>
+					<% if(campground.rating > 4.75) { %> fas fa-star checked <% } %>">
+				</span>
+				<em>(total reviews: <%= campground.reviews.length %>)</em>
+			</p>
+			<p>
+				Current campground rating: <strong><%= campground.rating.toFixed(2) %></strong>
+			</p>
+		</div>
+		<div>		
+			<h4>All reviews for this campground:</h4>
+			<hr>
+			<% campground.reviews.forEach(function(review){ %>
+			<div class="row">
+				<div class="col-md-3">
+					<%- '<span class="fas fa-star checked"></span>'.repeat(review.rating) %>
+					<%- '<span class="far fa-star checked"></span>'.repeat(5 - review.rating) %>
+					<div>Review by: <a href="/users/<%= review.author.id %>"><strong><%= review.author.username %></strong></a></div>
+					<span><em><%= review.updatedAt.toDateString() %></em></span>
+					<div class="clearfix">
+						<% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+						<a class="btn btn-sm btn-warning" href="/campgrounds/<%=campground.slug %>/reviews/<%=review._id %>/edit">Edit</a>
+						<form class="d-inline-block mt-2" id="delete-form" 
+							  action="/campgrounds/<%=campground.slug %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+							<input type="submit" class="btn btn-sm btn-danger" value="Delete">
+						</form>
+						<% } %>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<p class="text-justify">
+						<%= review.text %>
+					</p>
+				</div>
+			</div>
+			<hr>
+			<% }); %>
+			<% } %>
+			<div>
+				<a class="btn btn-primary <% if (currentUser && campground.reviews.some(function (review)
+					{return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" 
+					href="/campgrounds/<%= campground.slug %>/reviews/new">
+					Write a New Review
+				</a>
+			</div>
+			<div class="mt-3 mb-3">
+				<a class="btn btn-default p-0" href="/campgrounds/<%= campground.slug %>"><i class="fas fa-arrow-left"></i> Go back</a>
+			</div>
+		</div>
+	</div>
 </div>
+    <!--Review section-->
 
 <%- include("../partials/footer") %>

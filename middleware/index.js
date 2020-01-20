@@ -1,13 +1,13 @@
 const Campground = require('../models/campground'),
 	  Comment = require('../models/comment'),
-      Review = require("../models/review");
+	  Review = require("../models/review");
 
 //all the middleware goes here
 var middlewareObj = {};
 
 middlewareObj.checkCampgroundOwnership = function(req, res, next){
 	if(req.isAuthenticated()){
-		Campground.findById(req.params.id, function(err, foundCampground){
+		Campground.findOne({slug: req.params.slug}, function(err, foundCampground){
 			if(err || !foundCampground){
 				req.flash("error", "Campground not found!");
 				res.redirect("back");
@@ -79,7 +79,7 @@ middlewareObj.checkReviewOwnership = function(req, res, next) {
 middlewareObj.checkReviewExistence = function (req, res, next) {
     try {
 		if (req.isAuthenticated()) {
-			Campground.findById(req.params.id).populate("reviews").exec(function (err, foundCampground) {
+			Campground.findOne({slug: req.params.slug}).populate("reviews").exec(function (err, foundCampground) {
 				if (err || !foundCampground) {
 					req.flash("error", "Campground not found.");
 					res.redirect("back");
@@ -90,7 +90,7 @@ middlewareObj.checkReviewExistence = function (req, res, next) {
 					});
 					if (foundUserReview) {
 						req.flash("error", "You already wrote a review.");
-						return res.redirect("/campgrounds/" + foundCampground._id);
+						return res.redirect("/campgrounds/" + foundCampground.slug);
 					}
 					// if the review was not found, go to the next middleware
 					next();
@@ -109,7 +109,7 @@ middlewareObj.checkReviewExistence = function (req, res, next) {
 
 middlewareObj.calculateAverage = function(reviews){
     if (reviews.length === 0) {
-        return 0;
+    	return 0;
     }
     var sum = 0;
     reviews.forEach(function (element) {

@@ -38,22 +38,35 @@
 				<% if (campground.rating === 0) { %>
                     <em>No reviews yet.</em>
                     <% } else { %>
-                    <span class="far fa-star checked<% if (campground.rating > 0.25 && campground.rating <= 0.75) { %> fas fa-star-half-alt checked <% } %> <% if(campground.rating > 0.75) { %> fas fa-star checked <% } %>"></span>
-                    <span class="far fa-star checked<% if (campground.rating > 1.25 && campground.rating <= 1.75) { %> fas fa-star-half-alt checked <% } %> <% if(campground.rating > 1.75) { %> fas fa-star checked <% } %>"></span>
-                    <span class="far fa-star checked<% if (campground.rating > 2.25 && campground.rating <= 2.75) { %> fas fa-star-half-alt checked <% } %> <% if(campground.rating > 2.75) { %> fas fa-star checked <% } %>"></span>
-                    <span class="far fa-star checked<% if (campground.rating > 3.25 && campground.rating <= 3.75) { %> fas fa-star-half-alt checked <% } %> <% if(campground.rating > 3.75) { %> fas fa-star checked <% } %>"></span>
-                    <span class="far fa-star checked<% if (campground.rating > 4.25 && campground.rating <= 4.75) { %> fas fa-star-half-alt checked <% } %> <% if(campground.rating > 4.75) { %> fas fa-star checked <% } %>"></span>
-                    <% } %>
+                    <span class="far fa-star checked
+						<% if (campground.rating > 0.25 && campground.rating <= 0.75) { %> fas fa-star-half-alt checked <% } %> 
+						<% if(campground.rating > 0.75) { %> fas fa-star checked <% } %>">
+					</span>
+                    <span class="far fa-star checked
+						<% if (campground.rating > 1.25 && campground.rating <= 1.75) { %> fas fa-star-half-alt checked <% } %>
+						<% if(campground.rating > 1.75) { %> fas fa-star checked <% } %>">
+					</span>
+                    <span class="far fa-star checked
+						<% if (campground.rating > 2.25 && campground.rating <= 2.75) { %> fas fa-star-half-alt checked <% } %>
+						<% if(campground.rating > 2.75) { %> fas fa-star checked <% } %>">
+					</span>
+                    <span class="far fa-star checked
+						<% if (campground.rating > 3.25 && campground.rating <= 3.75) { %> fas fa-star-half-alt checked <% } %> 
+						<% if(campground.rating > 3.75) { %> fas fa-star checked <% } %>">
+					</span>
+                    <span class="far fa-star checked
+						<% if (campground.rating > 4.25 && campground.rating <= 4.75) { %> fas fa-star-half-alt checked <% } %>
+						<% if(campground.rating > 4.75) { %> fas fa-star checked <% } %>">
+					</span>
+                <% } %>
 			<div>
            			<span class="badge label-primary mb-2"><i class="far fa-thumbs-up fa-lg"></i> <%= campground.likes.length %></span>
        			</div>
-				<a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More info</a>
+				<a href="/campgrounds/<%= campground.slug %>" class="btn btn-primary">More info</a>
 			</div>
 		</div>
 	</div>
 	<% }) %>
 </div>
-
-<a href="/">Back to homepage</a>
 
 <%- include("../partials/footer") %>

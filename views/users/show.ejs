@@ -16,7 +16,7 @@
 		<h3><%= user.username %>'s campgrounds:</h3>
 		<div class="list-group">
 			<% campgrounds.forEach(function(campground){ %>
-			<a class="list-group-item list-group-item-action" href="/campgrounds/<%= campground.id %>"><%= campground.name %></a>
+			<a class="list-group-item list-group-item-action" href="/campgrounds/<%= campground.slug %>"><%= campground.name %></a>
 			<% }); %>
 		</div>
 	</div>

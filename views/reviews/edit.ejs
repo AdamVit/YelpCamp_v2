@@ -1,17 +1,18 @@
 <%- include("../partials/header") %>
+
 <div class="row justify-content-center">
 	<div class="col-md-12 text-center m-4">
 		<h1>Change Review</h1>		
 	</div>
 	<div class="col-xs-8 col-md-6 col-lg-4">
-		<form action="/campgrounds/<%= campground_id %>/reviews/<%= review._id %>?_method=PUT" method="POST">
+		<form action="/campgrounds/<%= campground_slug %>/reviews/<%= review._id %>?_method=PUT" method="POST">
 			<div class="form-group">
 				<label for="rating">Leave a rating:</label>
 				<fieldset class="starability-basic form-group" id="rating">
 				<div>
 				<input type="radio" id="first-rate5" name="review[rating]" value="5" <% if (review.rating === 5) { %> checked <% } %> />
 				<label for="first-rate5" title="5 stars - Amazing">
-					<%- '<span class="fa fa-star checked"></span>'.repeat(5) %>
+					<%- '<span class="fas fa-star checked"></span>'.repeat(5) %>
 				</label>
 				</div>
 				<div>
@@ -49,7 +50,8 @@
 				<button class="btn btn-primary btn-block">Submit a Review</button>
 			</div>
 		</form>
-		<a href="/campgrounds/<%= campground_id %>">Go Back</a>
+		<a href="/campgrounds/<%= campground_slug %>">Go Back</a>
 	</div>
 </div>
+
 <%- include("../partials/footer") %>
