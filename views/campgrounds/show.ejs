@@ -136,9 +136,12 @@
 		<!-- Comment section -->
 		<div class="card">
 			<div class="card-body pb-2">
-				<div class="text-right">
-					<a class="btn btn-success" href="/campgrounds/<%= campground.slug %>/comments/new">
+				<div class="clearfix">
+					<a class="btn btn-success float-right" href="/campgrounds/<%= campground.slug %>/comments/new">
 						<i class="fas fa-plus pr-2"></i>Add new comment</a>
+					<div style="font-size: x-large;" class="float-left d-inline">
+						<strong>Comments</strong><i class="fas fa-comment mx-2"></i>
+					</div>
 				</div>
 				<hr>
 				<div class="row">
