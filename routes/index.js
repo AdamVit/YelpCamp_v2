@@ -16,7 +16,7 @@ router.get("/", function(req, res){
 
 //show register form
 router.get("/register", function(req, res){
-	res.render("register", {page: "register"});
+	res.render("users/register", {page: "register"});
 });
 
 //sing up logic
@@ -46,7 +46,7 @@ router.post("/register", function(req, res){
 
 //show login form
 router.get("/login", function(req, res){
-	res.render("login", {page: "login"});
+	res.render("users/login", {page: "login"});
 });
 
 //handeling login logic
@@ -68,7 +68,7 @@ router.get("/logout", function(req, res){
 
 //forgot password route
 router.get("/forgot", function(req, res){
-	res.render("forgot");
+	res.render("users/forgot");
 });
 
 router.post('/forgot', function(req, res, next) {

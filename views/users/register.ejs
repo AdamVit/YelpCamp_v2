@@ -1,15 +1,15 @@
-<%- include("./partials/header") %>
+<%- include("../partials/header") %>
 
 <div class="row">
     <div class="col-md-12">
         <form class="form-signin pb-0" action="/register" method="POST">
             <div class="form-group">
-				<label for="username">Username</label>
-                <input class="form-control" type="text" id="username" name="username" placeholder="JohnCon">
+				<label for="username" title="Required field">Username*</label>
+                <input class="form-control" type="text" id="username" name="username" placeholder="JohnCon" required>
             </div>
             <div class="form-group">
-				<label for="password">Password</label>
-                <input class="form-control" type="password" id="password" name="password" placeholder="safecode123">
+				<label for="password" title="Required field">Password*</label>
+                <input class="form-control" type="password" id="password" name="password" placeholder="safecode123" required>
             </div>
 			<div class="form-group">
 				<labe for="firstName">First name</labe>
@@ -20,8 +20,8 @@
                 <input class="form-control" type="text" id="lastName" name="lastName" placeholder="Conor">
             </div>
             <div class="form-group">
-				<label for="email">E-mail</label>
-                <input class="form-control" type="email" id="email" name="email" placeholder="johnc@gmail.com">
+				<label for="email" title="Required field">E-mail*</label>
+                <input class="form-control" type="email" id="email" name="email" placeholder="johnc@gmail.com" required>
             </div>
             <div class="form-group">
 				<label for="avatar">Avatar</label>
@@ -41,4 +41,4 @@
     </div>
 </div>
 
-<%- include("./partials/footer") %>
+<%- include("../partials/footer") %>
