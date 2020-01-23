@@ -42,15 +42,15 @@
 				</li>
 			  <% } else { %>
 				<li class="nav-item dropdown">
-				  <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true"
+				  <a href="#" class="dropdown-toggle nav-link <%= typeof page !== 'undefined' && page === 'notifications' ? 'active' : '' %>" data-toggle="dropdown" role="button" aria-haspopup="true"
 					 aria-expanded="false">Notifications <span class="badge"><%= notifications.length %></span>
 				  </a>
 				  <ul class="dropdown-menu">
-					<li class="nav-item text-center" >
+					<li class="nav-item text-center">
 						<a href="/notifications">View past notifications</a>
 					</li>
 					<% notifications.forEach(function(notification) { %>                          
-						<li class="nav-item" >
+						<li class="nav-item">
 							<a href="/notifications/<%= notification.id %>" class="nav-link">
 								<%= notification.username %> created a new campground
 							</a>
@@ -58,7 +58,7 @@
 					<% }); %>
 				  </ul>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item <%= typeof page !== 'undefined' && page === 'user' ? 'active' : '' %>">
 					<a href="/users/<%= currentUser.id %>" class="nav-link">Signed in as <%= currentUser.username %></a>
 				</li>
 				<li class="nav-item">

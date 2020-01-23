@@ -190,7 +190,7 @@ router.get('/users/:id', async function(req, res) {
     let user = await User.findById(req.params.id).populate('followers').exec();
 	//show campgrounds of found user  
 	Campground.find().where("author.id").equals(user._id).exec(function(err, campgrounds){	
-    res.render('users/show', { user, campgrounds });
+    res.render('users/show', { user, campgrounds, page: 'user' });
 	});	
   } catch(err) {
     req.flash('error', "Something went wrong!");
@@ -220,7 +220,7 @@ router.get('/notifications', middleware.isLoggedIn, async function(req, res) {
       options: { sort: { "_id": -1 } }
     }).exec();
     let allNotifications = user.notifications;
-    res.render('notifications/index', { allNotifications });
+    res.render('notifications/index', { allNotifications, page: 'notifications'});
   } catch(err) {
     req.flash('error', err.message);
     res.redirect('back');
