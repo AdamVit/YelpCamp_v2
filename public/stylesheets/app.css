@@ -1,3 +1,22 @@
+/*Reviews stars*/
+.star {
+	display: inline-block;
+	color: #F0F0F0;
+	text-shadow: 0 0 1px #666666;
+	font-size:30px;
+	cursor: pointer;
+}
+
+.highlight, .selected {
+	color:#F4B30A;
+	text-shadow: 0 0 1px #F48F0A;
+}
+
+.checked {
+    color: orange;
+}
+/*Reviews stars -end*/
+
 html {
 	height: 100%;
 }
@@ -6,10 +25,6 @@ body {
 	position: relative;
 	padding-bottom: 4rem;
 	min-height: 100%;
-}
-
-.checked {
-    color: orange;
 }
 
 nav {
@@ -48,9 +63,10 @@ div.row input.btn.btn-default {
 }
 
 input[value="Search"]{
-	margin-left: 5px;
-	color: rgba(255,255,255,.5);
+	color: #fff;
+	background-color: #007bff;
 }
+/* Search bar end */
 
 /* Google Maps */
 #map {
@@ -88,4 +104,12 @@ input[value="Search"]{
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+/* Bootstrap 4 - form end */
+
+/* search bar width */
+@media (min-width: 768px) and (max-width: 848px) { 
+	input.form-control {
+		width: 140px !important;
+	}
 }
