@@ -188,9 +188,9 @@ router.post('/reset/:token', function(req, res) {
 router.get('/users/:id', async function(req, res) {
   try {
     let user = await User.findById(req.params.id).populate('followers').exec();
-	//show campgrounds of found user  
-	Campground.find().where("author.id").equals(user._id).exec(function(err, campgrounds){	
-    res.render('users/show', { user, campgrounds, page: 'user' });
+	//show campgrounds of found user
+	Campground.find().where("author.id").equals(user._id).exec(function(err, campgrounds){
+		res.render('users/show', { user, campgrounds, page: 'user' });
 	});	
   } catch(err) {
     req.flash('error', "Something went wrong!");

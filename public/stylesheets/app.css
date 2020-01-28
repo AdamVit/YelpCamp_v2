@@ -1,3 +1,32 @@
+html {
+	height: 100%;
+}
+
+body {
+	position: relative;
+	padding-bottom: 4rem;
+	min-height: 100%;
+}
+
+nav {
+	position: sticky !important;
+	margin-bottom: 15px;
+}
+
+/* Notifications dropdown */
+ul.dropdown-menu.show {
+	background: #8C989D;
+}
+
+li.nav-item.text-center a {
+	color: #343A40;
+}
+/* Notifications dropdown -end*/
+
+.delete-form {
+	display: inline;
+}
+
 /*Reviews stars*/
 .star {
 	display: inline-block;
@@ -17,33 +46,7 @@
 }
 /*Reviews stars -end*/
 
-html {
-	height: 100%;
-}
-
-body {
-	position: relative;
-	padding-bottom: 4rem;
-	min-height: 100%;
-}
-
-nav {
-	position: sticky !important;
-	margin-bottom: 15px;
-}
-
-ul.dropdown-menu.show {
-	background: #8C989D;
-}
-
-li.nav-item.text-center a {
-	color: #343A40;
-}
-
-.delete-form {
-	display: inline;
-}
-
+/* Footer */
 .bottom {
 	position: absolute;
 	right: 0;
@@ -57,16 +60,6 @@ li.nav-item.text-center a {
 .search {
 	margin: 0.5em;
 }
-
-div.row input.btn.btn-default {
-	color: #000;
-}
-
-input[value="Search"]{
-	color: #fff;
-	background-color: #007bff;
-}
-/* Search bar end */
 
 /* Google Maps */
 #map {
@@ -105,6 +98,18 @@ input[value="Search"]{
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+/* Login password control */
+.eye {
+	top: 33%;
+	right: 5%;
+	z-index: 2;
+}
+
+.eye:hover {
+	cursor: pointer;
+}
+
 /* Bootstrap 4 - form end */
 
 /* search bar width */

@@ -5,6 +5,7 @@ const express = require('express'),
 	  User = require('../models/user'),
 	  Notification = require('../models/notification'),
 	  Review = require('../models/review'),
+	  isImageUrl = require('is-image-url'),
 	  middleware = require('../middleware');
 
 var NodeGeocoder = require('node-geocoder');
@@ -78,7 +79,13 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 	//get data from form and add to campground array
 	var name = req.body.name;
 	var price = req.body.price;
-	var image = req.body.image;
+	//Check if URL is image
+	if(isImageUrl(req.body.image)){
+		var image = req.body.image;
+		} else {
+		req.flash('error', "The submitted URL wasn't image!");
+		return res.redirect('back');
+	};
 	var desc = req.body.description;
 	var author = {
 		id: req.user._id,
@@ -160,7 +167,13 @@ router.put("/:slug", middleware.checkCampgroundOwnership, function(req, res){
 			} else {
 				campground.name = req.body.campground.name;
 				campground.description = req.body.campground.description;
-				campground.image = req.body.campground.image;
+				//Check if URL is image
+				if(isImageUrl(req.body.campground.image)){
+					campground.image = req.body.campground.image;
+					} else {
+					req.flash('error', "The submitted URL wasn't image!");
+					return res.redirect('back');
+				};
 				campground.price = req.body.campground.price;
 				campground.lat = req.body.campground.lat;
 				campground.lng = req.body.campground.lng;

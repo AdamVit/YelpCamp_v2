@@ -1,3 +1,4 @@
+/* Review functions */
 function highlightStar(obj) {
 	removeHighlight();		
 	$('.star').each(function(index) {
@@ -32,4 +33,16 @@ function resetRating() {
 			}
 		});
 	}
+}
+
+/* Login show password function */
+function changeInput() {
+	$("input#inputPassword").attr("type",function(index, value){
+		if(value == "password"){
+			$("input#inputPassword").attr("type", "text");
+		} else {
+			$("input#inputPassword").attr("type", "password");
+		}
+    });
+	$("i.fa-eye").toggleClass("fa-eye-slash");
 }
