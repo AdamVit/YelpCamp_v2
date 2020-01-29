@@ -10,8 +10,12 @@
 				<a href="mailto:<%= user.email %>"><%= user.email %></a>
 		  </div>
 		</div>
-		<% if(!currentUser || user.id != currentUser.id) { %>
+		<!--If user is logged in, show un/follow button(except self-un/follow)  -->
+		<% if(currentUser && user.id != currentUser.id && !currentUser.following.includes(user.id)) { %>
 		<a href="/follow/<%= user.id %>"><button class="btn btn-primary mt-4">Follow <%= user.username %></button></a>
+		<% } %>
+		<% if(currentUser && user.id != currentUser.id && currentUser.following.includes(user.id)) { %>
+		<a href="/unfollow/<%= user.id %>"><button class="btn btn-danger mt-4">Unfollow <%= user.username %></button></a>
 		<% } %>
 	</div>
 	<div class="col-md-8 col-lg-4 my-3 my-md-0">

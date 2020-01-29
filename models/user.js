@@ -16,6 +16,12 @@ var UserSchema = new mongoose.Schema({
 			ref: 'User'
 		}
 	],
+	following: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'
+		}	
+	],
 	avatar: String,
 	firstName: String,
 	lastName: String,
