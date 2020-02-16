@@ -6,18 +6,43 @@ const express = require('express'),
 	  Notification = require('../models/notification'),
 	  Review = require('../models/review'),
 	  isImageUrl = require('is-image-url'),
-	  middleware = require('../middleware');
+	  middleware = require('../middleware'),
+	  multer = require('multer'),
+	  cloudinary = require('cloudinary').v2,
+	  NodeGeocoder = require('node-geocoder');
 
-var NodeGeocoder = require('node-geocoder');
- 
+//Google maps API configuration
 var options = {
-  provider: 'google',
-  httpAdapter: 'https',
-  apiKey: process.env.GEOCODER_API_KEY,
-  formatter: null
+	provider: 'google',
+	httpAdapter: 'https',
+	apiKey: process.env.GEOCODER_API_KEY,
+	formatter: null
 };
- 
+
 var geocoder = NodeGeocoder(options);
+
+//Image upload configuration
+var storage = multer.diskStorage({
+	filename: function(req, file, cb) {
+		cb(null, Date.now() + file.originalname);
+	}
+});
+
+var imageFilter = function (req, file, cb) {
+	// accept image files only
+	if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+		return cb(new Error('Only image files are allowed!'), false);
+	}
+	cb(null, true);
+};
+
+var upload = multer({ storage, fileFilter: imageFilter});
+
+cloudinary.config({ 
+  cloud_name: 'yelpcampv2', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 //INDEX - SHOW ALL CAMPGROUNDS
 router.get("/", function(req, res){
@@ -75,51 +100,59 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 });
 
 //CREATE ROUTE
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res){
 	//get data from form and add to campground array
-	var name = req.body.name;
-	var price = req.body.price;
+	let name = req.body.name;
+	let price = req.body.price;
 	//Check if URL is image
-	if(isImageUrl(req.body.image)){
-		var image = req.body.image;
-		} else {
-		req.flash('error', "The submitted URL wasn't image!");
-		return res.redirect('back');
-	};
-	var desc = req.body.description;
-	var author = {
+	// if(isImageUrl(req.body.image)){
+	// 	var image = req.body.image;
+	// 	} else {
+	// 	req.flash('error', "The submitted URL wasn't image!");
+	// 	return res.redirect('back');
+	// };
+	let desc = req.body.description;
+	let author = {
 		id: req.user._id,
 		username: req.user.username
 	};
-	geocoder.geocode(req.body.location, async function (err, data) {
-		if (err || !data.length) {
-		  console.log(err.message);
-		  req.flash('error', 'Invalid address');
-		  return res.redirect('back');
+	cloudinary.uploader.upload(req.file.path, {width: 250, height: 250, crop: "lfill"}, function(err, result) {
+		if(err) {
+			req.flash('error', err.message);
+			return res.redirect('back');
 		}
-		var lat = data[0].latitude;
-		var lng = data[0].longitude;
-		var location = data[0].formattedAddress;
-		var newCampground = {name, price, image, description: desc, author, location, lat, lng};
-		//create a new campground and save to DB
-		try {
-		  let campground = await Campground.create(newCampground);
-		  let user = await User.findById(req.user._id).populate('followers').exec();
-		  let newNotification = {
-			username: req.user.username,
-			campgroundId: campground.slug
-		  }
-		  for(const follower of user.followers) {
-			let notification = await Notification.create(newNotification);
-			follower.notifications.push(notification);
-			follower.save();
-		  }
-		  //redirect back to campgrounds page
-		  res.redirect(`/campgrounds/${campground.slug}`);
-		  } catch(err) {
-		  req.flash('error', err.message);
-		  res.redirect('back');
-		}
+		let image = result.secure_url;
+		let imageId = result.public_id;
+		geocoder.geocode(req.body.location, async function (err, data) {
+			if (err || !data.length) {
+				console.log(err.message);
+				req.flash('error', 'Invalid address');
+				return res.redirect('back');
+			}
+			let lat = data[0].latitude;
+			let lng = data[0].longitude;
+			let location = data[0].formattedAddress;
+			let newCampground = {name, price, image, imageId, description: desc, author, location, lat, lng};
+			//create a new campground and save to DB
+			try {
+				let campground = await Campground.create(newCampground);
+				let user = await User.findById(req.user._id).populate('followers').exec();
+				let newNotification = {
+					username: req.user.username,
+					campgroundId: campground.slug
+				}
+				for(const follower of user.followers) {
+					let notification = await Notification.create(newNotification);
+					follower.notifications.push(notification);
+					follower.save();
+				}
+				//redirect back to campgrounds page
+				res.redirect(`/campgrounds/${campground.slug}`);
+			} catch(err) {
+				req.flash('error', err.message);
+				res.redirect('back');
+			}
+		});
 	});
 });
 

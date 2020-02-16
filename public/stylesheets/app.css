@@ -61,6 +61,29 @@ li.nav-item.text-center a {
 	margin: 0.5em;
 }
 
+/* Adding image to campground */
+input[type="file"] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.imageUpload:active {
+	border-color: #80bdff;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.imageUpload:hover {
+	cursor: pointer;
+	background: #f7f7f2;
+	border-color: #11264f;
+    transition: background-color .25s ease-in-out, border-color .25s ease-in-out;
+}
+
 /* Google Maps */
 #map {
     height: 400px;

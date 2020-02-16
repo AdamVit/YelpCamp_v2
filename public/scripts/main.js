@@ -1,4 +1,4 @@
-/* Review functions */
+/* Review - stars */
 function highlightStar(obj) {
 	removeHighlight();		
 	$('.star').each(function(index) {
@@ -35,7 +35,7 @@ function resetRating() {
 	}
 }
 
-/* Login show password function */
+/* Login show password */
 function changeInput() {
 	$("input#inputPassword").attr("type",function(index, value){
 		if(value == "password"){
@@ -45,4 +45,15 @@ function changeInput() {
 		}
     });
 	$("i.fa-eye").toggleClass("fa-eye-slash");
+}
+
+/* Upload image */
+function showName () {
+	document.getElementById('image').onchange = function () {
+		if(this.files.item(0) == null){
+			document.getElementById("fileText").innerHTML = "Choose an image..."
+		} else {
+			var imageName = this.files.item(0).name;
+			document.getElementById("fileText").innerHTML = imageName;}
+	};
 }
